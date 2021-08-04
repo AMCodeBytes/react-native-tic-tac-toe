@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "react-native-tic-tac-toe",
+    "slug": "react-native-tic-tac-toe",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "react-native-tic-tac-toe"
+}
