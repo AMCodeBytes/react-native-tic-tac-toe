@@ -10,11 +10,13 @@ const App = () => {
 		[null, null, null],
 		[null, null, null]
 	]);
+	const [player, setPlayer] = useState('X');
+	const [won, setWon] = useState(false);
 
 	const boardItem = (row) => {
 		return state[row].map((val, i, arr) => {
 			return (
-				<TouchableHighlight style={ styles.item } onPress={ () => onPress() } underlayColor={'#c6c6c6'} key={`${row},${i}`}>
+				<TouchableHighlight style={ styles.item } onPress={ () => onPress(row, i) } underlayColor={'#c6c6c6'} key={`${row},${i}`}>
 					<Text style={[ styles.itemText, i === 1 && styles.itemMiddle ]}>{ val }</Text>
 				</TouchableHighlight>
 			);
@@ -22,8 +24,20 @@ const App = () => {
 	}
 
 	const onPress = (row, column) => {
+		if (!state[row][column]) {
+			setState(state => [...state, state[row][column] = player]);
+			changePlayer();
+		}
+	}
+
+	const checkWin = () => {
 
 	}
+
+	const reset = () => {
+	}
+
+	const changePlayer = () => setPlayer(player === 'X' ? 'O' : 'X');
 
 	return (
 		<SafeAreaProvider style={ styles.container }>
@@ -40,8 +54,8 @@ const App = () => {
 				<View style={ styles.row }>
 					{ boardItem(2) }
 				</View>
-				<StatusBar style="auto" />
 			</View>
+			<StatusBar style="auto" />
 		</SafeAreaProvider>
 	);
 }
