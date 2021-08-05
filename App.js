@@ -35,6 +35,12 @@ const App = () => {
 	}
 
 	const reset = () => {
+		setState([
+			[null, null, null],
+			[null, null, null],
+			[null, null, null]
+		]);
+		setPlayer('X');
 	}
 
 	const changePlayer = () => setPlayer(player === 'X' ? 'O' : 'X');
@@ -55,6 +61,9 @@ const App = () => {
 					{ boardItem(2) }
 				</View>
 			</View>
+			<TouchableHighlight style={ styles.btn } onPress={ () => reset() } underlayColor={'#c6c6c6'}>
+				<Text style={ styles.btnText }>New Game</Text>
+			</TouchableHighlight>
 			<StatusBar style="auto" />
 		</SafeAreaProvider>
 	);
@@ -99,6 +108,13 @@ const styles = StyleSheet.create({
 	itemMiddle: {
 		borderLeftWidth: 5,
 		borderRightWidth: 5,
+	},
+	btn: {
+		padding: 10,
+	},
+	btnText: {
+		fontSize: 32,
+		textAlign: 'center',
 	}
 });
 
