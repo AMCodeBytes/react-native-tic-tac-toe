@@ -24,14 +24,45 @@ const App = () => {
 	}
 
 	const onPress = (row, column) => {
-		if (!state[row][column]) {
-			setState(state => [...state, state[row][column] = player]);
+		if (!state[row][column] && !won) {
+			const newState = state;
+			newState[row][column] = player;
+			setState(newState);
+			checkWin();
+			console.log(won)
 			changePlayer();
 		}
 	}
 
 	const checkWin = () => {
+		// Check for diagonal win
+		if (((state[0][0] !== null || state[1][1] !== null || state[2][2] !== null) && 
+			(state[0][0] === state[1][1] && state[1][1] === state[2][2])) || 
+			((state[0][2] !== null || state[1][1] !== null || state[2][0] !== null) && 
+			(state[0][2] === state[1][1] && state[1][1] === state[2][0]))) {
+				console.log('diagonal win');
+				setWon(true);
+				return true;
+		}
 
+		// Check if row or column has won
+		for (let i = 0; i < state.length; i++) {
+			if (((state[i][0] !== null || state[i][1] !== null || state[i][2] !== null) && 
+				(state[i][0] === state[i][1]) && (state[i][1] === state[i][2]))) {
+					console.log('row win');
+					setWon(true);
+					return true;
+			}
+
+			if (((state[0][i] !== null || state[1][i] !== null || state[2][i] !== null) && 
+				(state[0][i] === state[1][i]) && (state[1][i] === state[2][i]))) {
+					console.log('column wins');
+					setWon(true);
+					return true;
+			}
+		}
+		setWon(false);
+		return false;
 	}
 
 	const reset = () => {
@@ -41,6 +72,7 @@ const App = () => {
 			[null, null, null]
 		]);
 		setPlayer('X');
+		setWon(false);
 	}
 
 	const changePlayer = () => setPlayer(player === 'X' ? 'O' : 'X');
