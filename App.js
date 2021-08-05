@@ -1,9 +1,30 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 const App = () => {
+
+	const [state, setState] = useState([
+		[null, null, null],
+		[null, null, null],
+		[null, null, null]
+	]);
+
+	const boardItem = (row) => {
+		return state[row].map((val, i, arr) => {
+			return (
+				<TouchableHighlight style={ styles.item } onPress={ () => onPress() } underlayColor={'#c6c6c6'} key={`${row},${i}`}>
+					<Text style={[ styles.itemText, i === 1 && styles.itemMiddle ]}>{ val }</Text>
+				</TouchableHighlight>
+			);
+		});
+	}
+
+	const onPress = (row, column) => {
+
+	}
+
 	return (
 		<SafeAreaProvider style={ styles.container }>
 			<SafeAreaView style={ styles.header }>
@@ -11,19 +32,13 @@ const App = () => {
 			</SafeAreaView>
 			<View style={ styles.board }>
 				<View style={[ styles.row, styles.rowBottom ]}>
-					<Text style={ styles.item }>X</Text>
-					<Text style={[ styles.item, styles.itemMiddle ]}>X</Text>
-					<Text style={ styles.item }>O</Text>
+					{ boardItem(0) }
 				</View>
 				<View style={[ styles.row, styles.rowBottom ]}>
-					<Text style={ styles.item }>O</Text>
-					<Text style={[ styles.item, styles.itemMiddle ]}>O</Text>
-					<Text style={ styles.item }>X</Text>
+					{ boardItem(1) }
 				</View>
 				<View style={ styles.row }>
-					<Text style={ styles.item }>X</Text>
-					<Text style={[ styles.item, styles.itemMiddle ]}>O</Text>
-					<Text style={ styles.item }>X</Text>
+					{ boardItem(2) }
 				</View>
 				<StatusBar style="auto" />
 			</View>
@@ -61,10 +76,11 @@ const styles = StyleSheet.create({
 	},
 	item: {
 		flex: 1,
+	},
+	itemText: {
 		textAlign: 'center',
 		fontSize: 52,
 		padding: 10,
-		backgroundColor: '#eeeeee',
 	},
 	itemMiddle: {
 		borderLeftWidth: 5,
